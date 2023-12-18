@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Load Bootstrap from CDN -->
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/css/bootstrap.min.css"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="/app.js"></script>
+
+    <style>
+        /* You can use this section to add any additional CSS code */
+        body {
+            background-color: #EADFEC;
+        }
+
+        .photo {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .content {
+            position: absolute;
+            width: 60%;
+            top: 200px;
+            left: auto;
+            right: 20px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 50px;
+        }
+
+        .container {
+            margin-top: 50px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        /* Media query for smaller screens */
+        @media screen and (max-width: 768px) {
+            .content {
+                margin-bottom: 150px;
+            }
+
+            .container {
+                margin-top: 150px;
+            }
+        }
+
+        .events {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .chats-container {
+            /* flex: 1; */
+            /* margin-left: 10px; */
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .chats {
+            /* Use flex to adjust the width of the chats column */
+            height: 400px;
+            overflow-y: auto;
+        }
+
+        .user-search-form {
+            margin-top: 20px;
+            display: flex;
+            width: 100%;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            /* flex-direction: row; */
+        }
+
+        .search-group {
+            width: 48%;
+            margin-bottom: 10px;
+            /* Add margin between rows */
+            flex: 1 0 45%;
+            margin-right: 10px;
+        }
+
+
+        .search-group label {
+            margin-bottom: 5px;
+            display: block;
+            font-weight: bold;
+        }
+
+        .search-group input,
+        .search-group select {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .search-group {
+                width: 100%;
+            }
+        }
+
+        .event-created {
+            display: flex;
+            background-color: #f0f0f0;
+            padding: 20px;
+            margin-bottom: 10px;
+        }
+
+        .date {
+            font-size: xx-large;
+            margin-right: 20px;
+            font-family: 'Carattere';
+        }
+
+        .details h2 {
+            color: purple;
+            /* Adjust color as needed */
+        }
+
+        .details p {
+            margin-bottom: 5px;
+        }
+
+        .details span {
+            background-color: lightgrey;
+            padding: 5px;
+        }
+
+        .profile h1 {
+            font-family: 'vollkorn';
+            margin-left: 20px;
+        }
+
+        .profile h2 {
+            margin-left: 20px;
+        }
+
+        .profile img {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <!-- Use Bootstrap navbar component for the header -->
+        <nav class="navbar navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.html">
+                    <img src="/images/logo.png" alt="logo" width="60" height="60" class="d-inline-block align-text-top">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasDarkNavbar"
+                    aria-labelledby="offcanvasDarkNavbarLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Dark offcanvas</h5>
+                        <button type="button" class="btn-close btn-close-black" data-bs-dismiss="offcanvas"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body" style="color: #EADFEC;">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#p"
+                                    style="color: black;">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#g" style="color: black;">Groups</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" style="color: black;">Chats</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="../index.html" style="color: black;">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+    </header>
+    <div class="containers-fluid">
+        <!-- Use Bootstrap image component for the photo -->
+        <img src="/images/background.jpg" class="img-fluid photo">
+
+
+        <div class="profile">
+            <img src="/images/profile.jpg" width="150px" height="150px" style="border-radius: 50%;">
+            <h3>Welcome!!</h3>
+            <h1>{{name}}</h1>
+            <h2>Class Of: {{classYear}}</h2>
+        </div>
+
+        <div class="content">
+            <form id="filter-event-form" action="/filterEvents" method="GET">
+                <h1>EVENTS HAPPENING</h1>
+                <div class="user-search-form">
+                    <div class="search-group">
+                        <label for="userSearch" class="form-label">Event Category</label>
+                        <select class="form-select" id="userSearch" name="userSearch">
+                            <option selected>--Select--</option>
+                            <option value="Networking">Networking</option>
+                            <option value="Professional Development">Professional Development</option>
+                            <option value="Campus Events">Campus Events</option>
+                            <!-- Add more options as needed -->
+                        </select>
+                    </div>
+                    <div class="search-group">
+                        <label for="userSearch" class="form-label">Event Name</label>
+                        <input type="text" class="form-control" placeholder="--Select--" aria-label="Search"
+                            aria-describedby="basic-addon1">
+                    </div>
+                    <div class="search-group">
+                        <label for="userSearch" class="form-label">Event Location</label>
+                        <input type="text" class="form-control" placeholder="--Select--" aria-label="Search"
+                            aria-describedby="basic-addon1">
+                    </div>
+                    <div class="search-group">
+                        <label for="userSearch" class="form-label">Event Date</label>
+                        <input type="date" class="form-control" aria-label="Search" aria-describedby="basic-addon1"
+                            id="eventDate" name="eventDate">
+                    </div>
+                </div>
+                <button type="submit" id="filter-button" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <!-- Use Bootstrap media object component for the chats list -->
+            <div class="col-md-4">
+                <h1 class="text-center" style="color: #5C0029;">CHATS</h1>
+                <div class="chats-container">
+                    <div class="chats">
+                        <div class="media">
+                            <img src="/images/profile6.jpg" class="align-self-start mr-3" alt="Catherine" width="40" height="40" style="border-radius: 50%;">
+                            <div class="media-body">
+                                <h5 class="mt-0">Catherine</h5>
+                                <p>Hey, are you going to the event tomorrow?</p>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <img src="/images/profile3.jpg" class="align-self-start mr-3" alt="Jane" width="40" height="40" style="border-radius: 50%;">
+                            <div class="media-body">
+                                <h5 class="mt-0">Jane</h5>
+                                <p>I just RSVP'd for the networking event. Want to join me?</p>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <img src="/images/profile4.jpg" class="align-self-start mr-3" alt="Zawadi" width="40" height="40" style="border-radius: 50%;">
+                            <div class="media-body">
+                                <h5 class="mt-0">Zawadi</h5>
+                                <p>How was the campus event? Did you meet anyone interesting?</p>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <img src="/images/profile5.jpg" class="align-self-start mr-3" alt="Sam" width="40" height="40" style="border-radius: 50%;">
+                            <div class="media-body">
+                                <h5 class="mt-0">Sam</h5>
+                                <p>How was the professional development event? Did you learn anything interesting?</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-8">
+                <div class="row mb-4">
+                    <div class="col-4">
+                        <div class="events" onclick="showEvents('allEvents')">
+                            <h5>All Events</h5>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="events" onclick="showEvents('myEvents')">
+                            <h5>My Events</h5>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="events" onclick="showEvents('rsvpEvents')">
+                            <h5>RSVP Events</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- This section is used to pupulate the event page by displaying all the events created-->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="col-8">
+                            <form id="create-event-form" action="/listEvents" method="POST">
+                                <button type="submit" id="list-button">List Events</button>
+                                <div class="all-events" id="allEventsSection">
+                                    <ul>
+                                        {{#events}}
+                                        <li>
+                                            <div class="event-created">
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <div class="date">{{formattedShortDate}}</div>
+                                                    </div>
+                                                    <div class="col-sm-6 text-center">
+                                                        <div class="details">
+                                                            <h2>{{category}}</h2>
+                                                            <p>{{id}}</p>
+                                                            <p>{{name}}</p>
+                                                            <p>{{location}}</p>
+                                                            <p>{{formattedLongDate}}</p>
+                                                            <p><i class="far fa-clock"></i>{{formattedTime}}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 text-end">
+                                                        <div class="d-flex flex-column align-items-end">
+                                                            <button type="submit"
+                                                                class="btn btn-success rsvp-btn">RSVP</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        {{/events}}
+                                    </ul>
+                                </div>
+                            </form>
+
+                            <form id="create-event-form" action="/filterEvents" method="POST">
+                                <!-- Filtering events -->
+                                <div class="filtered-events" id="filteredEventsSection">
+                                    <ul>
+                                        {{#filteredEvents}}
+                                        <li>
+                                            <div class="event-created">
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <div class="date">{{formattedShortDate}}</div>
+                                                    </div>
+                                                    <div class="col-sm-6 text-center">
+                                                        <div class="details">
+                                                            <h2>{{category}}</h2>
+                                                            <p>{{id}}</p>
+                                                            <p>{{name}}</p>
+                                                            <p>{{location}}</p>
+                                                            <p>{{formattedLongDate}}</p>
+                                                            <p><i class="far fa-clock"></i>{{formattedTime}}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 text-end">
+                                                        <div class="d-flex flex-column align-items-end">
+                                                            <button type="submit"
+                                                                class="btn btn-success rsvp-btn">RSVP</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        {{/filteredEvents}}
+                                    </ul>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="col-8">
+                            <div class="my-events" id="myEventsSection" style="display: none;">
+                                <div class="done-created d-flex justify-content-end">
+                                    <div class="created d-flex align-items-center">
+                                        <img src="/images/profile.jpg" alt="Profile Picture" class="me-4" width="50" height="50" style="border-radius: 50%;">
+                                        <form action="create" class="d-flex" method="POST">
+                                            <input type="text" class="form-control me-2" placeholder="Add an event"
+                                                style="border-radius: 20px;">
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal"
+                                                style="background-color: #EADFEC; border-color: black; color: black; border-radius: 20px;">+</button>
+                                        </form>
+                                        <div class="modal fade" id="exampleModal" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Add New Event
+                                                        </h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form id="create-event-form" action="/createEvent"
+                                                            method="POST">
+                                                            <div class="mb-3">
+                                                                <label for="event-id" class="col-form-label">Event
+                                                                    Id:</label>
+                                                                <input type="text" class="form-control" id="event-id"
+                                                                    name="event-id">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="event-category" class="col-form-label">Event
+                                                                    Category:</label>
+                                                                <select id="event-category" name="event-category"
+                                                                    class="form-select form-control"
+                                                                    placeholder="Event Categories">
+                                                                    <option value="all">--Select Category--</option>
+                                                                    <option value="networking">Networking</option>
+                                                                    <option value="professional development">
+                                                                        Professional Development</option>
+                                                                    <option value="campus event">Campus Events
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="event-name" class="col-form-label">Event
+                                                                    Name:</label>
+                                                                <input type="text" class="form-control" id="event-name"
+                                                                    name="event-name">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="event-location" class="col-form-label">Event
+                                                                    Location:</label>
+                                                                <input type="text" class="form-control"
+                                                                    id="event-location" name="event-location">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="event-date" class="col-form-label">Event
+                                                                    Date:</label>
+                                                                <input type="datetime-local" class="form-control"
+                                                                    id="event-date" name="event-date">
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Close</button>
+                                                                <button type="submit" class="btn btn-primary"
+                                                                    id="create-button">Save
+                                                                    Event</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End of the + button to for creating event -->
+
+
+                                <ul>
+                                    {{#events}}
+                                    <li>
+                                        <!-- This is where the created event by the user is being displayed -->
+                                        <div class="event-created">
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <div class="date">{{formattedShortDate}}</div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="details">
+                                                        <h2>{{category}}</h2>
+                                                        <p>{{id}}</p>
+                                                        <p>{{name}}</p>
+                                                        <p>{{location}}</p>
+                                                        <p>{{formattedLongDate}}</p>
+                                                        <p><i class="fa-regular fa-clock"></i>{{formattedTime}}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="d-flex flex-column align-items-end">
+                                                        <button type="button" class="btn btn-success mb-2"
+                                                            data-bs-toggle="modal" data-bs-target="#example2Modal"
+                                                            style="background-color: #EADFEC; color: black;">EDIT</button>
+                                                        <button class="btn btn-success" data-bs-toggle="modal"
+                                                            data-bs-target="#example3Modal"
+                                                            style="background-color: #871998;">DELETE</button>
+                                                    </div>
+
+                                                    <!-- Delete Function -->
+
+                                                    <div class="modal fade" id="example3Modal" tabindex="-1"
+                                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLabel">
+                                                                        Delete
+                                                                        Event</h5>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <form id="create-event-form" action="/deleteEvent"
+                                                                        method="POST">
+                                                                        <div class="mb-3">
+                                                                            <label for="event-id"
+                                                                                class="col-form-label">Event
+                                                                                Id:</label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="event-id" name="event-id">
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button"
+                                                                                class="btn btn-secondary"
+                                                                                data-bs-dismiss="modal">Close</button>
+                                                                            <button type="submit"
+                                                                                class="btn btn-primary"
+                                                                                id="delete-button">Delete
+                                                                                Event</button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <!-- Uodate function or edit -->
+                                                    <div class="modal fade" id="example2Modal" tabindex="-1"
+                                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLabel">Edit
+                                                                        Event</h5>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <form id="create-event-form" action="/updateEvent"
+                                                                        method="POST">
+                                                                        <div class="mb-3">
+                                                                            <label for="event-id"
+                                                                                class="col-form-label">Event
+                                                                                Id:</label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="event-id" name="event-id">
+                                                                        </div>
+                                                                        <div class="mb-3">
+                                                                            <label for="event-category"
+                                                                                class="col-form-label">Event
+                                                                                Category:</label>
+                                                                            <select id="event-category"
+                                                                                name="new-event-category"
+                                                                                class="form-select form-control"
+                                                                                placeholder="Event Categories">
+                                                                                <option value="all">--Select Category--
+                                                                                </option>
+                                                                                <option value="networking">Networking
+                                                                                </option>
+                                                                                <option
+                                                                                    value="professional development">
+                                                                                    Professional Development</option>
+                                                                                <option value="campus event">Campus
+                                                                                    Events
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="mb-3">
+                                                                            <label for="event-name"
+                                                                                class="col-form-label">Event
+                                                                                Name:</label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="new-event-name"
+                                                                                name="new-event-name">
+                                                                        </div>
+                                                                        <div class="mb-3">
+                                                                            <label for="event-location"
+                                                                                class="col-form-label">Event
+                                                                                Location:</label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="event-location"
+                                                                                name="new-event-location">
+                                                                        </div>
+                                                                        <div class="mb-3">
+                                                                            <label for="event-date"
+                                                                                class="col-form-label">Event
+                                                                                Date:</label>
+                                                                            <input type="datetime-local"
+                                                                                class="form-control" id="event-date"
+                                                                                name="new-event-date">
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button"
+                                                                                class="btn btn-secondary"
+                                                                                data-bs-dismiss="modal">Close</button>
+                                                                            <button type="submit"
+                                                                                class="btn btn-primary"
+                                                                                id="edit-button">Edit
+                                                                                Event</button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    {{/events}}
+                                </ul>
+                            </div>
+
+
+
+                            <!-- RSVP Events are being displayed-->
+
+                            <div class="col-12">
+                                <!-- Add this HTML section where you want to display the success message -->
+                                <div id="successMessage" style="display: none;">
+                                    <p>RSVP successful! Your registration for the event has been saved.</p>
+                                </div>
+
+                                <div class="rsvp-events" id="rsvpEventsSection" style="display: none;">
+                                    <ul>
+                                        {{#events}}
+                                        <li>
+                                            <div class="event-created">
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <div class="date">{{formattedShortDate}}</div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="details">
+                                                            <h2>{{category}}</h2>
+                                                            <p>{{id}}</p>
+                                                            <p>{{name}}</p>
+                                                            <p>{{location}}</p>
+                                                            <p>{{formattedLongDate}}</p>
+                                                            <p><i class="far fa-clock"></i>{{formattedTime}}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <div class="d-flex flex-column align-items-end">
+                                                            <button type="submit"
+                                                                class="btn btn-success mb-2 cancel-btn"
+                                                                data-event-id="{{eventId}}"
+                                                                style="background-color: #EADFEC; color: black;">CANCEL</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        {{/events}}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    // Code to read the message query parameter from the URL and display a popup
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const message = urlParams.get('message');
+
+                    if (message) {
+                        alert(decodeURIComponent(message));
+                    }
+
+                </script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="mb-3">
+                                                                        <label for="event-category"
+                                                                            class="col-form-label">Event
+                                                                            Category:</label>
+                                                                        <select id="event-category"
+                                                                            name="event-category"
+                                                                            class="form-select form-control"
+                                                                            placeholder="Event Categories">
+                                                                            <option value="all">--Select Category--
+                                                                            </option>
+                                                                            <option value="networking">Networking
+                                                                            </option>
+                                                                            <option
+                                                                                value="professional development">
+                                                                                Professional Development</option>
+                                                                            <option value="campus event">Campus
+                                                                                Events
+                                                                            </option>
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="mb-3">
+                                                                        <label for="event-name"
+                                                                            class="col-form-label">Event
+                                                                            Name:</label>
+                                                                        <input type="text" class="form-control"
+                                                                            id="new-event-name"
+                                                                            name="event-name">
+                                                                    </div>
+                                                                    <div class="mb-3">
+                                                                        <label for="event-location"
+                                                                            class="col-form-label">Event
+                                                                            Location:</label>
+                                                                        <input type="text" class="form-control"
+                                                                            id="event-location"
+                                                                            name="event-location">
+                                                                    </div>
+                                                                    <div class="mb-3">
+                                                                        <label for="event-date"
+                                                                            class="col-form-label">Event
+                                                                            Date:</label>
+                                                                        <input type="datetime-local"
+                                                                            class="form-control" id="event-date"
+                                                                            name="event-date">
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button"
+                                                                            class="btn btn-secondary"
+                                                                            data-bs-dismiss="modal">Close</button>
+                                                                        <button type="submit"
+                                                                            class="btn btn-primary"
+                                                                            id="edit-button">Delete
+                                                                            Event</button>
+                                                                    </div> -->
+
+
+
+
+
+<!-- <div class="all-events" id="allEventsSection">
+                                <div class="event-created">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="date">Oct 11th</div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="details">
+                                                <h2>Professional Development</h2>
+                                                <p>Onboarding of the new alumni</p>
+                                                <p><span>12</span> October 11, 2023</p>
+                                                <p><i class="far fa-clock"></i> 11:00AM - 4:00PM</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 text-end">
+                                            <div class="d-flex flex-column align-items-end">
+                                                <img src="jdi" alt="Your Image" class="img-fluid mb-1">
+                                                <button type="button" class="btn btn-success">RSVP</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+
+
+
+
+
+
+<!-- <div class="event-created">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="date">Dec 10th</div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="details">
+                                            <h2>Professional Development</h2>
+                                            <p>Anual Carrer fair</p>
+                                            <p><span>12</span> December 10, 2023</p>
+                                            <p><i class="far fa-clock"></i> 1:00PM - 4:00PM</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="d-flex flex-column align-items-end">
+                                            <button type="submit" class="btn btn-success mb-2" 
+                                                data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                style="background-color: #EADFEC; color: black;">EDIT</button>
+                                            <button type="submit" class="btn btn-success"
+                                                style="background-color: #871998;">DELETE</button>
+                                        </div>
+                                        <div class="modal fade" id="exampleModal" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Edit Event
+                                                        </h5>
+                                                        <button type="button" class="btn-close"
+                                                            data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form id="create-event-form" action="/updateEvent" method="POST">
+                                                            <div class="mb-3">
+                                                                <label for="event-id" class="col-form-label">Event
+                                                                    Id:</label>
+                                                                <input type="text" class="form-control"
+                                                                    id="event-id" name="event-id">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="event-category"
+                                                                    class="col-form-label">Event
+                                                                    Category:</label>
+                                                                <select id="event-category" name="new-event-category" 
+                                                                    class="form-select form-control"
+                                                                    placeholder="Event Categories">
+                                                                    <option value="all">--Select Category--</option>
+                                                                    <option value="networking">Networking</option>
+                                                                    <option value="professional development">
+                                                                        Professional Development</option>
+                                                                    <option value="campus event">Campus Events
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="event-name" class="col-form-label">Event
+                                                                    Name:</label>
+                                                                <input type="text" class="form-control"
+                                                                    id="event-name" name="new-event-name">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="event-location"
+                                                                    class="col-form-label">Event
+                                                                    Location:</label>
+                                                                <input type="text" class="form-control"
+                                                                    id="event-location" name="new-event-location">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="event-date" class="col-form-label">Event
+                                                                    Date:</label>
+                                                                <input type="datetime-local" class="form-control"
+                                                                    id="event-date" name="new-event-date">
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary" id="edit-button"
+                                                            data-bs-dismiss="modal">Edit
+                                                            Event</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->

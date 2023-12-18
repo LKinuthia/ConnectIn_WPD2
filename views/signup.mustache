@@ -1,0 +1,168 @@
+<html>
+
+<head>
+    <title> ConectIn </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #EADFEC;
+        }
+
+        nav {
+            margin-bottom: 20px;
+        }
+
+        .row {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            justify-content: flex-end;
+        }
+
+        .photo-container {
+            flex: 1;
+            justify-content: flex-start;
+        }
+
+        .navbar {
+            background-color: #583B57 !important;
+        }
+
+        .btn-primary {
+            background-color: #583B57;
+        }
+
+        .btn-primary:hover {
+            background-color: #5C0029;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-primary"><a class="navbar-brand" href="#">ConectIn</a></nav>
+    <div class="container">
+        <div class="alert alert-danger" role="alert" id="error-group" style="display: none">
+            <!-- <ul id="errors"></ul> -->
+            {{#errors}}
+            <ul>
+                <li>{{msg}}</li>
+            </ul>
+            {{/errors}}
+        </div>
+        <div class="row">
+            <div class="col-sm col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+                <h3>Sign up To ConectIn!</h3>
+                <form action="/signup" method="POST">
+                    <div class="form-group"><input class="form-control" type="text" name="name" id="name"
+                            placeholder="Name"></div>
+                    <div class="form-group"><input class="form-control" type="text" name="classYear" id="classYear"
+                            placeholder="Class Year"></div>
+                    <div class="form-group"><input class="form-control" type="email" name="email" id="email"
+                            placeholder="Email"></div>
+                    <div class="form-group"><input class="form-control" type="password" name="password" id="password"
+                            placeholder="Password"></div>
+                    <div class="form-group"><input class="form-control" type="password" name="confirmPassword"
+                            id="confirmPassword" placeholder="Confirm Password"></div>
+                    <div class="form-group"><button class="form-control btn btn-primary" type="submit"
+                            id="signup-btn">Sign Up</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('#signup-btn').click(function () {
+            var name = $('#name').val();
+            var classYear = $('#classYear').val();
+            var email = $('#email').val();
+            var password1 = $('#password').val();
+            var password2 = $('#confirmPassword').val();
+
+            // Reset error display
+            $('#error-group').hide();
+            $('#errors').html('');
+
+            // Full Name Validation
+            if (name.trim() === '') {
+                $('#errors').append('<li>Full name is required</li>');
+                $('#error-group').show();
+            }
+
+             // Class Year Validation
+             if (classYear.trim() === '') {
+                $('#errors').append('<li>Class Year is required</li>');
+                $('#error-group').show();
+            }
+
+            // Email Validation
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email regex
+            if (!emailRegex.test(email)) {
+                $('#errors').append('<li>Invalid email address</li>');
+                $('#error-group').show();
+            }
+
+            // Password Length Validation
+            if (password1.length < 5) {
+                $('#errors').append('<li>Password must be at least 5 characters long</li>');
+                $('#error-group').show();
+            }
+
+            // Password Match Validation
+            if (password1 !== password2) {
+                $('#errors').append('<li>Password and Confirm Password do not match</li>');
+                $('#error-group').show();
+                return;
+            }
+
+            // If no errors, proceed with AJAX request
+            if ($('#errors').is(':empty')) {
+                $.ajax({
+                    url: '/signup',
+                    type: 'POST',
+                    cache: false,
+                    data: {
+                        fullname: fullName,
+                        classYear: classYear,
+                        email: email,
+                        password: password1,
+                        confirmpassword: password2,
+                    },
+                    success: function () {
+                        alert('Your submission was successful');
+                    },
+                    error: function (data) {
+                        console.log(data);
+                        $('#error-group').show();
+                        var errors = JSON.parse(data.responseText);
+                        var errorsContainer = $('#errors');
+                        errorsContainer.empty(); // Clear the container
+
+                        var errorsList = '';
+                        for (var i = 0; i < errors.length; i++) {
+                            errorsList += '<li>' + errors[i].msg + '</li>';
+                        }
+                        errorsContainer.append(errorsList);
+                    }
+                });
+            }
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+    
+</body>
+
+</html>

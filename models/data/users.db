@@ -1,0 +1,3 @@
+{"name":"Daniel","classYear":"1987","email":"admin@example.com","password":"$2b$10$5K4mLP39FtwLkLbe9txvOuIFsdegWjFCRiCTTk7u9f5f.TjOWfjRi","eventsCreated":{},"_id":"HFjQc00MgnwiqwTE"}
+{"name":"Loise","classYear":"2019","email":"l@gmail.com","password":"$2b$10$BT54BSastZuw8jatpqA7dOi0vSufZCw0P5LubdKbEhI/S/SY2xFne","eventsCreated":{"count":1},"_id":"TLNg683Kr01nnglf"}
+{"name":"Loise","classYear":"2019","email":"l@gmail.com","password":"$2b$10$BT54BSastZuw8jatpqA7dOi0vSufZCw0P5LubdKbEhI/S/SY2xFne","eventsCreated":{"count":1},"_id":"TLNg683Kr01nnglf"}
